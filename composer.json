@@ -1,0 +1,15 @@
+{
+    "name": "artur/mvc",
+    "require": {
+        "twig/twig": "^3.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\" : "app",
+            "core\\" : "core"
+        },
+        "files": [
+            "app/helpers/helpers.php"
+        ]
+    }
+}

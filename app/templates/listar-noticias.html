@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+
+<h1>Notícias</h1>
+
+<ul>
+	{% for noticia in noticias %}
+		<li>{{ noticia.nome }}</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
