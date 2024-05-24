@@ -10,14 +10,12 @@ class PDOSingleton {
 
     private static function conectar(){
         try {
-            $pdo = new PDO(
-                'mysql:dbname=teste2;host:localhost;charset=utf8',
-                'root',
-                '',
-                [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ]
-            );
+            $dsn = 'mysql:dbname=' . $_ENV['DB_DATABASE'] . ';host:' . $_ENV['DB_HOST'] . ';charset=utf8';
+            $username = $_ENV['DB_USERNAME'];
+            $password = $_ENV['DB_PASSWORD'];
+            $options = [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ];
 
-            return $pdo;
+            return new PDO( $dsn, $username, $password, $options );
         } catch( PDOException $e ){
             die("Erro na conexão: " . $e->getMessage());
         }
