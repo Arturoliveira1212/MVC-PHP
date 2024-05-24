@@ -1,7 +1,8 @@
 {
     "name": "artur/mvc",
     "require": {
-        "twig/twig": "^3.10"
+        "twig/twig": "^3.10",
+        "vlucas/phpdotenv": "^5.6"
     },
     "autoload": {
         "psr-4": {
