@@ -15,6 +15,6 @@ class NoticiaViewEmTwig extends ViewEmTwig {
     }
 
     public function exibirNoticia( Noticia $noticia ){
-        $this->render( 'listar-noticia.html', [ 'noticia' => $noticia, 'titulo' => $noticia->getNome() ] );
+        $this->render( 'listar-noticia.html', [ 'noticia' => $noticia, 'titulo' => $noticia->getTitulo() ] );
     }
 }

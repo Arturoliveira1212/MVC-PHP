@@ -19,8 +19,21 @@ class NoticiaController extends Controller {
     }
 
     public function listar(){
-        $noticias = $this->service->obterComRestricoes();
+        $restricoes = $this->obterRestricoes();
+        $noticias = $this->service->obterComRestricoes( $restricoes );
         $this->view->exbirNoticias( $noticias );
+    }
+
+    private function obterRestricoes(){
+        $restricoes = [];
+
+        if( ! empty( $_GET ) ){
+            if( isset( $_GET['nome'] ) ){
+                $restricoes['nome'] = $_GET['nome'];
+            }
+        }
+
+        return $restricoes;
     }
 
     public function listarUm( array $parametros ){

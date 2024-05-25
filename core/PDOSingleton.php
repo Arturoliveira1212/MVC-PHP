@@ -1,6 +1,6 @@
 <?php
 
-namespace app\databases;
+namespace core;
 
 use PDO;
 use PDOException;
@@ -10,7 +10,7 @@ class PDOSingleton {
 
     private static function conectar(){
         try {
-            $dsn = 'mysql:dbname=' . $_ENV['DB_DATABASE'] . ';host:' . $_ENV['DB_HOST'] . ';charset=utf8';
+            $dsn = $_ENV['DB_DSN'];
             $username = $_ENV['DB_USERNAME'];
             $password = $_ENV['DB_PASSWORD'];
             $options = [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ];

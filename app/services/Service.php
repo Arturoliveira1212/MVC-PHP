@@ -2,7 +2,7 @@
 
 namespace app\services;
 
-use app\databases\DAO;
+use app\dao\DAO;
 
 abstract class Service {
     protected DAO $dao;

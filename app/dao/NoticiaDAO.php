@@ -1,6 +1,6 @@
 <?php
 
-namespace app\databases;
+namespace app\dao;
 
 use app\models\Noticia;
 
@@ -48,7 +48,7 @@ class NoticiaDAO extends DAOEmBDR {
     public function transformarEmObjeto( array $resultado ){
         $noticia = new Noticia();
         $noticia->setId( intval( $resultado['id'] ) );
-        $noticia->setNome( $resultado['nome'] );
+        // $noticia->setNome( $resultado['nome'] );
 
         return $noticia;
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\databases;
+namespace app\dao;
 
+use core\PDOSingleton;
 use PDO;
 use PDOException;
-use Twig\Node\EmbedNode;
 
 class BancoDadosRelacional implements BancoDados {
     private ?PDO $pdo = null;

@@ -7,14 +7,14 @@ use app\exceptions\ServiceNaoEncontradaException;
 use app\exceptions\DAONaoEncontradaException;
 use core\Controller;
 use app\services\Service;
-use app\databases\DAO;
+use app\dao\DAO;
 use app\views\View;
 
 abstract class ClassFactory {
 
     const CAMINHO_CONTROLLER = 'app\\controllers\\';
     const CAMINHO_SERVICE = 'app\\services\\';
-    const CAMINHO_DAO = 'app\\databases\\';
+    const CAMINHO_DAO = 'app\\dao\\';
     const CAMINHO_VIEW = 'app\\views\\';
 
     /**
