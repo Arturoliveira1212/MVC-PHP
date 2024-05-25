@@ -9,11 +9,10 @@ use core\ClassFactory;
 
 class App {
 
-    public function executar(){
-        $uri = Uri::uri();
-        $informacoesRota = $this->obterInformacoesRota( $uri );
+    public function executar( string $uri, string $metodoRequisicao ){
+        $informacoesRota = $this->obterInformacoesRota( $uri, $metodoRequisicao );
         if( empty( $informacoesRota ) ){
-            throw new RotaNaoEncontradaException( 'Recurso não existe.', 404 );
+            throw new RotaNaoEncontradaException( 'Recurso não existe.', HttpRequest::CODIGO_NAO_EXISTENTE );
         }
 
         list( $nomeController, $metodo ) = explode( '@', array_values( $informacoesRota )[0] );
@@ -21,7 +20,7 @@ class App {
         $controller = ClassFactory::makeController( $nomeController );
 
         if( ! method_exists( $controller, $metodo ) ){
-            throw new MetodoNaoEncontradoException( "Método $metodo não existe.", 404 );
+            throw new MetodoNaoEncontradoException( "Método não existe.", HttpRequest::CODIGO_NAO_EXISTENTE );
         }
 
         $parametros = $this->obterParametrosRota( $informacoesRota, $uri );
@@ -33,9 +32,9 @@ class App {
      * Método responsável por retornar um array com informações da rota.
      * @return array [ /home => Home@index ]
      */
-    private function obterInformacoesRota( string $uri ){
+    private function obterInformacoesRota( string $uri, string $metodoRequisicao ){
         $informacoesRota = [];
-        $rotas = $this->obterRotasParaMetodo( $_SERVER['REQUEST_METHOD'] );
+        $rotas = $this->obterRotasParaMetodo( $metodoRequisicao );
 
         if( array_key_exists( $uri, $rotas ) ){
             $informacoesRota = [ $uri => $rotas[ $uri ] ];

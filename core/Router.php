@@ -6,10 +6,10 @@ class Router {
 
     public static function rotas(){
         return [
-            'GET' => self::rotasGet(),
-            'POST' => self::rotasPost(),
-            'PUT' => self::rotasPut(),
-            'DELETE' => self::rotasDelete()
+            HttpRequest::METODO_GET    => self::rotasGet(),
+            HttpRequest::METODO_POST   => self::rotasPost(),
+            HttpRequest::METODO_PUT    => self::rotasPut(),
+            HttpRequest::METODO_DELETE => self::rotasDelete()
         ];
     }
 

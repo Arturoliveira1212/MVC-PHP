@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c4797730a1914528eaffaf32b72d1ed4",
+    "content-hash": "26a25d6a41e9c4afb4d23bed36feca2a",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -846,6 +846,65 @@
                 "source": "https://github.com/cakephp/utility"
             },
             "time": "2024-02-27T16:19:58+00:00"
+        },
+        {
+            "name": "kahlan/kahlan",
+            "version": "5.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kahlan/kahlan.git",
+                "reference": "e7d89f4a6ba0d71517a31e7e197b14d3bd85a0af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kahlan/kahlan/zipball/e7d89f4a6ba0d71517a31e7e197b14d3bd85a0af",
+                "reference": "e7d89f4a6ba0d71517a31e7e197b14d3bd85a0af",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "rector/rector": "^0.18",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "bin": [
+                "bin/kahlan"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Kahlan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CrysaLEAD"
+                }
+            ],
+            "description": "The PHP Test Framework for Freedom, Truth and Justice.",
+            "keywords": [
+                "BDD",
+                "Behavior-Driven Development",
+                "Monkey Patching",
+                "TDD",
+                "mock",
+                "stub",
+                "testing",
+                "unit test"
+            ],
+            "support": {
+                "issues": "https://github.com/kahlan/kahlan/issues",
+                "source": "https://github.com/kahlan/kahlan/tree/5.2.6"
+            },
+            "time": "2023-12-05T21:56:31+00:00"
         },
         {
             "name": "psr/container",
