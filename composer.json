@@ -12,5 +12,11 @@
         "files": [
             "app/helpers/helpers.php"
         ]
+    },
+    "require-dev": {
+        "robmorgan/phinx": "^0.14.0"
+    },
+    "scripts": {
+        "phinx": "phinx"
     }
 }
