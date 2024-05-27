@@ -8,7 +8,7 @@ use app\exceptions\DAONaoEncontradaException;
 use core\Controller;
 use app\services\Service;
 use app\dao\DAO;
-use app\views\View;
+use app\views\ViewEmTwig;
 
 abstract class ClassFactory {
 
@@ -67,10 +67,10 @@ abstract class ClassFactory {
      * Método responsável por fabricar intâncias de Views.
      *
      * @param string $nomeView
-     * @return View
+     * @return ViewEmTwig
      */
     public static function makeView( string $nomeView ){
-        $view = self::CAMINHO_VIEW . $nomeView . 'ViewEmTwig';
+        $view = self::CAMINHO_VIEW . $nomeView . 'View';
         if( ! class_exists( $view ) ){
             throw new DAONaoEncontradaException( "View $nomeView não existe", 404 );
         }

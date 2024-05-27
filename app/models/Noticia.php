@@ -4,7 +4,7 @@ namespace app\models;
 
 use DateTime;
 
-class Noticia {
+class Noticia extends Model {
     private int $id = 0;
     private string $titulo = '';
     private ?Categoria $categoria = null;

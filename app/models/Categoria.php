@@ -2,15 +2,15 @@
 
 namespace app\models;
 
-class Categoria {
-    private int $id = 0;
+class Categoria extends Model {
+    private ?int $id = null;
     private string $nome = "";
 
     public function getId(){
         return $this->id;
     }
 
-    public function setId( int $id ){
+    public function setId( ?int $id ){
         $this->id = $id;
     }
 

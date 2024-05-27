@@ -2,29 +2,30 @@
 
 namespace app\dao;
 
-use app\traits\ConversorDadosNoticia;
+use app\traits\ConversorDadosCategoria;
 
-class NoticiaDAO extends DAOEmBDR {
+class CategoriaDAO extends DAOEmBDR {
 
-    use ConversorDadosNoticia;
+    use ConversorDadosCategoria;
 
     public function __construct(){
         parent::__construct();
     }
 
     protected function nomeTabela(){
-        return 'noticia';
+        return 'categoria';
     }
 
-    protected function adicionarNovo( $noticia ){
+    protected function adicionarNovo( $categoria ){
         $nomeTabela = $this->nomeTabela();
-        $comando = "INSERT INTO {$nomeTabela} ( id, titulo, idCategoria, conteudo, dataCadastro ) VALUES ( :id, :titulo, :idCategoria, :conteudo, :dataCadastro )";
-        $parametros = $this->transformarEmArray( $noticia );
-        $this->getBancoDados()->executar( $comando, $parametros );
+        $comando = "INSERT INTO {$nomeTabela} ( id, nome ) VALUES ( :id, :nome )";
+        $this->getBancoDados()->executar( $comando, $this->transformarEmArray( $categoria ) );
     }
 
-    protected function atualizar( $objeto ){
-        $comando = '';
+    protected function atualizar( $categoria ){
+        $nomeTabela = $this->nomeTabela();
+        $comando = "UPDATE {$nomeTabela} SET nome = :nome WHERE id = :id";
+        $this->getBancoDados()->executar( $comando, $categoria->emArray() );
     }
 
     protected function obterQuery( array $restricoes, array &$parametros ){

@@ -6,49 +6,40 @@ use app\controllers\Controller;
 use core\ClassFactory;
 use app\models\Noticia;
 use app\exceptions\ServiceException;
-use app\views\NoticiaViewEmTwig;
+use app\models\Categoria;
+use app\traits\ConversorDadosNoticia;
+use app\views\NoticiaView;
 use Throwable;
 
 class NoticiaController extends Controller {
 
-    private NoticiaViewEmTwig $view;
+    use ConversorDadosNoticia;
 
     public function __construct(){
-        $this->view = ClassFactory::makeView( 'Noticia' );
-        $this->service = ClassFactory::makeService( 'Noticia' );
+        parent::__construct( Noticia::getNomeClasse() );
     }
 
-    public function listar(){
-        $restricoes = $this->obterRestricoes();
-        $noticias = $this->service->obterComRestricoes( $restricoes );
-        $this->view->exbirNoticias( $noticias );
+    public function getView() :NoticiaView {
+        return $this->view;
     }
 
-    private function obterRestricoes(){
-        $restricoes = [];
-
-        if( ! empty( $_GET ) ){
-            if( isset( $_GET['nome'] ) ){
-                $restricoes['nome'] = $_GET['nome'];
-            }
-        }
-
-        return $restricoes;
+    public function cadastrar(){
+        $this->getView()->exibirFormularioCadastro();
     }
 
-    public function listarUm( array $parametros ){
-        $id = intval( $parametros['noticia'] );
-        $noticia = $this->service->obterComId( $id );
+    public function editar( array $parametros ){
+        $id = intval( $parametros['cadastrar'] );
+        $noticia = $this->getService()->obterComId( $id );
         if( $noticia instanceof Noticia ){
-            $this->view->exibirNoticia( $noticia );
+            $this->getView()->exibirFormularioEdicao( $noticia );
         }
     }
 
     public function novo(){
         try {
             $erro = [];
-            $noticia = $this->criarNoticia();
-            $this->service->salvar( $noticia, $erro );
+            $noticia = $this->transformarEmObjeto( $_POST );
+            $this->getService()->salvar( $noticia, $erro );
         } catch( ServiceException $e ){
             throw $e; // TO DO
         } catch( Throwable $th ){
@@ -56,14 +47,34 @@ class NoticiaController extends Controller {
         }
     }
 
-    private function criarNoticia(){
-        $noticia = new Noticia();
-
-        return $noticia;
+    private function povoarCategoria( Noticia $noticia, int $idCategoria ){
+        /** @var CategoriaController */
+        $categoriaController = ClassFactory::makeController( Categoria::class );
+        /** @var Categoria */
+        $categoria = $categoriaController->obterComId( $idCategoria );
+        $noticia->setCategoria( $categoria );
     }
 
-    public function editar(){
+    public function listar(){
+        $restricoes = $this->obterRestricoes();
+        $noticias = $this->getService()->obterComRestricoes( $restricoes );
+        $this->getView()->exbirNoticias( $noticias );
+    }
 
+    private function obterRestricoes(){
+        $restricoes = [];
+
+        // TO DO
+
+        return $restricoes;
+    }
+
+    public function listarUm( array $parametros ){
+        $id = intval( $parametros['noticia'] );
+        $noticia = $this->getService()->obterComId( $id );
+        if( $noticia instanceof Noticia ){
+            $this->getView()->exibirNoticia( $noticia );
+        }
     }
 
     public function excluir(){

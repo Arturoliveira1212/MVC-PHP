@@ -10,7 +10,7 @@ class PDOSingleton {
 
     private static function conectar(){
         try {
-            $dsn = $_ENV['DB_DSN'];
+            $dsn = 'mysql:dbname=' . $_ENV['DB_DATABASE'] . ';host=' . $_ENV['DB_HOST'] . ';charset=utf8';
             $username = $_ENV['DB_USERNAME'];
             $password = $_ENV['DB_PASSWORD'];
             $options = [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ];

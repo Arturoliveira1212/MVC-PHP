@@ -62,7 +62,6 @@ class BancoDadosRelacional implements BancoDados {
 
         $resultados = $this->consultar( $comando, $parametros );
 
-        // dd( $callback);
         if( ! empty( $resultados ) ){
             foreach( $resultados as $resultado ){
                 $objeto = call_user_func_array( $callback, [ $resultado ] );
