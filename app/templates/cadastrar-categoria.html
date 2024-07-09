@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+
+<h1>Adicionar Categoria</h1>
+
+<p>{{ erro }}</p>
+
+<form id="form-categoria" method="POST" action="{{action}}">
+    <label for="nome">Nome</label>
+    <input type="hidden" name="id" id="id" value="{{categoria.id}}">
+    <input type="text" name="nome" id="nome" value="{{categoria.nome}}">
+    <input type="submit" value="Adicionar">
+</form>
+
+{% endblock %}
