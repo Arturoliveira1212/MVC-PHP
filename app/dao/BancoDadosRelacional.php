@@ -57,21 +57,6 @@ class BancoDadosRelacional implements BancoDados {
         // TO DO
     }
 
-    public function obterObjetos( string $comando, array $callback, array $parametros = [] ){
-        $objetos = [];
-
-        $resultados = $this->consultar( $comando, $parametros );
-
-        if( ! empty( $resultados ) ){
-            foreach( $resultados as $resultado ){
-                $objeto = call_user_func_array( $callback, [ $resultado ] );
-                $objetos[] = $objeto;
-            }
-        }
-
-        return $objetos;
-    }
-
     public function iniciarTransacao(){
         $this->pdo->beginTransaction();
     }

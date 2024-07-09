@@ -2,6 +2,8 @@
 
 namespace app\dao;
 
+use app\traits\ConversorDados;
+
 abstract class DAOEmBDR implements DAO {
     private ?BancoDadosRelacional $bancoDados = null;
 
@@ -35,13 +37,28 @@ abstract class DAOEmBDR implements DAO {
     public function obterComId( $id ){
         $parametros = [];
         $comando = $this->obterQuery( [ 'id' => $id ], $parametros );
-        $objetos = $this->getBancoDados()->obterObjetos( $comando, [ $this, 'transformarEmObjeto' ], $parametros );
+        $objetos = $this->obterObjetos( $comando, [ $this, 'transformarEmObjeto' ], $parametros );
         return ! empty( $objetos ) ? array_shift($objetos) : null;
     }
 
     public function obterComRestricoes( array $restricoes = [] ){
         $parametros = [];
         $comando = $this->obterQuery( $restricoes, $parametros );
-        return $this->getBancoDados()->obterObjetos( $comando, [ $this, 'transformarEmObjeto' ], $parametros );
+        return $this->obterObjetos( $comando, [ $this, 'transformarEmObjeto' ], $parametros );
+    }
+
+    public function obterObjetos( string $comando, array $callback, array $parametros = [] ){
+        $objetos = [];
+
+        $resultados = $this->getBancoDados()->consultar( $comando, $parametros );
+
+        if( ! empty( $resultados ) ){
+            foreach( $resultados as $resultado ){
+                $objeto = call_user_func_array( $callback, [ $resultado ] );
+                $objetos[] = $objeto;
+            }
+        }
+
+        return $objetos;
     }
 }

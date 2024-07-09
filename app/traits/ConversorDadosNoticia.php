@@ -19,7 +19,7 @@ trait ConversorDadosNoticia {
     }
 
     private function preencherCategoria( Noticia &$noticia, int $idCategoria ){
-        $categoriaDAO = ClassFactory::makeDAO( Categoria::class );
+        $categoriaDAO = ClassFactory::makeDAO( 'Categoria' );
         $categoria = $categoriaDAO->obterComId( $idCategoria );
         $noticia->setCategoria( $categoria );
     }

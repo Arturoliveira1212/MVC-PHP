@@ -2,15 +2,15 @@
 
 namespace app\models;
 
-class Categoria extends Model {
-    private ?int $id = null;
+class Categoria implements Model {
+    private int $id = 0;
     private string $nome = "";
 
     public function getId(){
         return $this->id;
     }
 
-    public function setId( ?int $id ){
+    public function setId( int $id ){
         $this->id = $id;
     }
 
@@ -20,5 +20,13 @@ class Categoria extends Model {
 
     public function setNome( string $nome ){
         $this->nome = $nome;
+    }
+
+    public function obterAtributosSimples(){
+        return [ 'id', 'nome' ];
+    }
+
+    public function obterAtributosObjetos(){
+        return [];
     }
 }

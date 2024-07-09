@@ -15,23 +15,21 @@ class Router {
 
     private static function rotasGet(){
         return [
-            '/'                         => 'Noticia@listar',
-            '/categoria'                => 'Categoria@listar',
-            '/categoria/[0-9]+'         => 'Categoria@listarUm',
-            '/categoria/cadastrar'      => 'Categoria@cadastrar',
-            '/noticia'                  => 'Noticia@listar',
-            '/noticia/[0-9]+'           => 'Noticia@listarUm',
-            '/noticia/cadastrar'        => 'Noticia@cadastrar',
-            '/noticia/cadastrar/[0-9]+' => 'Noticia@editar',
+            '/'                           => 'Noticia@listar',
+            '/noticia'                    => 'Noticia@listar',
+            '/noticia/[0-9]+'             => 'Noticia@listarUm',
+            '/noticia/cadastrar'          => 'Noticia@cadastrar',
+            '/noticia/cadastrar/[0-9]+'   => 'Noticia@editar',
+            '/categoria'                  => 'Categoria@listar',
+            '/categoria/cadastrar/[0-9]+' => 'Categoria@listarUm',
+            '/categoria/cadastrar'        => 'Categoria@cadastrar'
         ];
     }
 
     private static function rotasPost(){
         return [
-            '/categoria/cadastrar'        => 'Categoria@novo',
-            '/categoria/cadastrar/[0-9]+' => 'Categoria@novo',
-            '/usuario/cadastrar'          => 'Usuario@novo',
-            '/usuario/cadastrar/[0-9]+'   => 'Usuario@novo'
+            '/categoria/cadastrar'        => 'Categoria@salvarCategoria',
+            '/categoria/cadastrar/[0-9]+' => 'Categoria@salvarCategoria',
         ];
     }
 

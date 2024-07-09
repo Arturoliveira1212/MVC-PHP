@@ -6,10 +6,20 @@ use app\dao\DAO;
 use core\ClassFactory;
 
 abstract class Service {
+    protected string $classe;
     protected DAO $dao;
 
-    public function __construct( string $classe ){
-        $this->setDao( ClassFactory::makeDAO( $classe ) );
+    public function __construct(){
+        $this->setClasse( str_replace( 'Service','', basename( str_replace( '\\', '/', get_class( $this ) ) ) ) );
+        $this->setDao( ClassFactory::makeDAO( $this->getClasse() ) );
+    }
+
+    public function getClasse(){
+        return $this->classe;
+    }
+
+    public function setClasse( string $classe ){
+        $this->classe = $classe;
     }
 
     protected function getDao(){

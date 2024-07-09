@@ -11,7 +11,7 @@ class NoticiaService extends Service {
     const TAMANHO_MAXIMO_TITULO = 100;
 
     public function __construct(){
-        parent::__construct( Noticia::getNomeClasse() );
+        parent::__construct( 'Noticia' );
     }
 
     protected function validar( $noticia, array $erro = [] ){

@@ -16,7 +16,7 @@ class NoticiaController extends Controller {
     use ConversorDadosNoticia;
 
     public function __construct(){
-        parent::__construct( Noticia::getNomeClasse() );
+        parent::__construct( 'Noticia' );
     }
 
     public function getView() :NoticiaView {
@@ -49,7 +49,7 @@ class NoticiaController extends Controller {
 
     private function povoarCategoria( Noticia $noticia, int $idCategoria ){
         /** @var CategoriaController */
-        $categoriaController = ClassFactory::makeController( Categoria::class );
+        $categoriaController = ClassFactory::makeController( 'Categoria' );
         /** @var Categoria */
         $categoria = $categoriaController->obterComId( $idCategoria );
         $noticia->setCategoria( $categoria );

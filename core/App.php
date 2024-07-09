@@ -3,16 +3,15 @@
 namespace core;
 
 use core\Router;
-use app\exceptions\RotaNaoEncontradaException;
-use app\controllers\MetodoNaoEncontradoException;
 use core\ClassFactory;
+use app\exceptions\NaoEncontradoException;
 
 class App {
 
     public function executar( string $uri, string $metodoRequisicao ){
         $informacoesRota = $this->obterInformacoesRota( $uri, $metodoRequisicao );
         if( empty( $informacoesRota ) ){
-            throw new RotaNaoEncontradaException( 'Recurso não existe.', HttpRequest::CODIGO_NAO_EXISTENTE );
+            throw new NaoEncontradoException( 'Recurso não encontrado.', HttpRequest::CODIGO_NAO_EXISTENTE );
         }
 
         list( $nomeController, $metodo ) = explode( '@', array_values( $informacoesRota )[0] );
@@ -20,7 +19,7 @@ class App {
         $controller = ClassFactory::makeController( $nomeController );
 
         if( ! method_exists( $controller, $metodo ) ){
-            throw new MetodoNaoEncontradoException( "Método não existe.", HttpRequest::CODIGO_NAO_EXISTENTE );
+            throw new NaoEncontradoException( "Método não encontrado.", HttpRequest::CODIGO_NAO_EXISTENTE );
         }
 
         $parametros = $this->obterParametrosRota( $informacoesRota, $uri );

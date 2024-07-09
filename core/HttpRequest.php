@@ -2,7 +2,7 @@
 
 namespace core;
 
-class HttpRequest {
+abstract class HttpRequest {
 
     const METODO_GET = 'GET';
     const METODO_POST = 'POST';

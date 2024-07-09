@@ -4,7 +4,7 @@ namespace app\models;
 
 use DateTime;
 
-class Noticia extends Model {
+class Noticia implements Model {
     private int $id = 0;
     private string $titulo = '';
     private ?Categoria $categoria = null;
@@ -51,5 +51,18 @@ class Noticia extends Model {
 
     public function setDataCadastro( DateTime $dataCadastro ){
         $this->dataCadastro = $dataCadastro;
+    }
+
+    public function obterAtributosSimples(){
+        return [ 'id', 'titulo', 'conteudo', 'dataCadastro' ];
+    }
+
+    public function obterAtributosObjetos(){
+        return [
+            'categoria' => [
+                'idCampo' => 'idCategoria',
+                'nomeObjeto' => 'Categoria'
+            ]
+        ];
     }
 }
