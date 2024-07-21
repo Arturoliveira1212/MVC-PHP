@@ -17,11 +17,11 @@ class Router {
         return [
             '/'                           => 'Noticia@listar',
             '/noticia'                    => 'Noticia@listar',
-            '/noticia/[0-9]+'             => 'Noticia@listarUm',
+            '/noticia/[0-9]+'             => 'Noticia@listarComId',
             '/noticia/cadastrar'          => 'Noticia@cadastrar',
             '/noticia/cadastrar/[0-9]+'   => 'Noticia@editar',
             '/categoria'                  => 'Categoria@listar',
-            '/categoria/cadastrar/[0-9]+' => 'Categoria@listarUm',
+            '/categoria/cadastrar/[0-9]+' => 'Categoria@listarComId',
             '/categoria/cadastrar'        => 'Categoria@cadastrar'
         ];
     }
@@ -41,7 +41,7 @@ class Router {
 
     private static function rotasDelete(){
         return [
-
+            'categoria/excluir/[0-9]+' => 'Categoria@excluirComId'
         ];
     }
 }

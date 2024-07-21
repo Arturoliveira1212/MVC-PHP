@@ -17,7 +17,7 @@ class PDOSingleton {
 
             return new PDO( $dsn, $username, $password, $options );
         } catch( PDOException $e ){
-            die("Erro na conexão: " . $e->getMessage());
+            throw $e;
         }
     }
 

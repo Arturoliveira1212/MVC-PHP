@@ -30,9 +30,9 @@ abstract class Service {
         $this->dao = $dao;
     }
 
-    abstract protected function validar( $objeto, array $erro = [] );
+    abstract protected function validar( $objeto, array &$erro = [] );
 
-    public function salvar( $objeto, array $erro = [] ){
+    public function salvar( $objeto, array &$erro = [] ){
         $this->validar( $objeto, $erro );
         $this->getDao()->salvar( $objeto );
     }

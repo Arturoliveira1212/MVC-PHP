@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+
+<h1>Categorias</h1>
+
+{% if categorias is not empty %}
+	<table border="3">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for categoria in categorias %}
+				<tr>
+					<td> {{ categoria.id }} </td>
+					<td> {{ categoria.nome }} </td>
+					<td> <a href="/categoria/cadastrar/{{categoria.id}}" class="editar-categoria"> Editar </a> </td>
+					<td> <a href="" class="excluir-categoria" data-id-categoria="{{categoria.id}}"> Excluir </a> </td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% else %}
+	<p>Nenhuma categoria Cadastrada.</p>
+{% endif %}
+
+<div>
+	<a href="/categoria/cadastrar">Adicionar categoria</a>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="/assets/js/gerenciar-categoria.js"></script>
+
+{% endblock %}

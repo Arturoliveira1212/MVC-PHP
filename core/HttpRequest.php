@@ -10,7 +10,9 @@ abstract class HttpRequest {
     const METODO_DELETE = 'DELETE';
 
     const CODIGO_SUCESSO = 200;
+    const CODIGO_ERRO_CLIENTE = 400;
     const CODIGO_NAO_EXISTENTE = 404;
+    const CODIGO_ERRO_SERVIDOR = 500;
 
     /**
      * Método responsável por retornar a URI da requisição enviada.

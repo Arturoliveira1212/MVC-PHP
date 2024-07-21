@@ -44,7 +44,7 @@ abstract class Controller {
         $this->service = $service;
     }
 
-    public function salvar( $objeto, array $erro = [] ){
+    public function salvar( $objeto, array &$erro = [] ){
         $this->getService()->salvar( $objeto, $erro );
     }
 

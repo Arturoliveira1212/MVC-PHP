@@ -15,7 +15,7 @@ try {
     $app = new App();
     $app->executar( HttpRequest::uri(), HttpRequest::metodo() );
 } catch( NaoEncontradoException $e ){
-    $appView->exibirPaginaNaoEncontrada();
+    $appView->exibirPaginaNaoEncontrada( $e );
 } catch( Throwable $e ){
     $appView->exibirPaginaErro();
     dd( $e );

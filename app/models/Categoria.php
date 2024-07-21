@@ -6,6 +6,9 @@ class Categoria implements Model {
     private int $id = 0;
     private string $nome = "";
 
+    const TAMANHO_MINIMO_NOME = 1;
+    const TAMANHO_MAXIMO_NOME = 10;
+
     public function getId(){
         return $this->id;
     }
