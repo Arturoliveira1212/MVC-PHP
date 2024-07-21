@@ -3,62 +3,26 @@
 namespace app\controllers;
 
 use app\controllers\Controller;
+use app\exceptions\NaoEncontradoException;
 use core\ClassFactory;
 use app\models\Noticia;
 use app\exceptions\ServiceException;
-use app\models\Categoria;
-use app\traits\ConversorDadosNoticia;
 use app\views\NoticiaView;
-use Throwable;
 
 class NoticiaController extends Controller {
 
-    use ConversorDadosNoticia;
-
     public function __construct(){
-        parent::__construct( 'Noticia' );
+        parent::__construct();
     }
 
-    public function getView() :NoticiaView {
-        return $this->view;
-    }
-
-    public function cadastrar(){
-        $this->getView()->exibirFormularioCadastro();
-    }
-
-    public function editar( array $parametros ){
-        $id = intval( $parametros['cadastrar'] );
-        $noticia = $this->getService()->obterComId( $id );
-        if( $noticia instanceof Noticia ){
-            $this->getView()->exibirFormularioEdicao( $noticia );
-        }
-    }
-
-    public function novo(){
-        try {
-            $erro = [];
-            $noticia = $this->transformarEmObjeto( $_POST );
-            $this->getService()->salvar( $noticia, $erro );
-        } catch( ServiceException $e ){
-            throw $e; // TO DO
-        } catch( Throwable $th ){
-            throw $th; // TO DO
-        }
-    }
-
-    private function povoarCategoria( Noticia $noticia, int $idCategoria ){
-        /** @var CategoriaController */
-        $categoriaController = ClassFactory::makeController( 'Categoria' );
-        /** @var Categoria */
-        $categoria = $categoriaController->obterComId( $idCategoria );
-        $noticia->setCategoria( $categoria );
-    }
-
+    // GET => /noticia
     public function listar(){
         $restricoes = $this->obterRestricoes();
         $noticias = $this->getService()->obterComRestricoes( $restricoes );
-        $this->getView()->exbirNoticias( $noticias );
+
+        /** @var NoticiaView */
+        $noticiaView = $this->getView();
+        $noticiaView->listarNoticias( $noticias );
     }
 
     private function obterRestricoes(){
@@ -69,15 +33,49 @@ class NoticiaController extends Controller {
         return $restricoes;
     }
 
-    public function listarUm( array $parametros ){
-        $id = intval( $parametros['noticia'] );
+    // GET => categoria/cadastrar/[0-9]
+    public function listarComId( array $parametros ){
+        $id = intval( $parametros['cadastrar'] );
         $noticia = $this->getService()->obterComId( $id );
-        if( $noticia instanceof Noticia ){
-            $this->getView()->exibirNoticia( $noticia );
+        if( ! $noticia instanceof Noticia ){
+            throw new NaoEncontradoException( 'Notícia não encontrada' );
         }
+
+        /** @var CategoriaController */
+        $categoriaController = ClassFactory::makeController( 'Categoria' );
+        $categorias = (array) $categoriaController->obterComRestricoes();
+
+        /** @var NoticiaView */
+        $noticiaView = $this->getView();
+        $noticiaView->exibirFormularioCadastro( $categorias, $noticia );
     }
 
-    public function excluir(){
+    // GET => /noticia/cadastrar
+    public function cadastrar(){
+        /** @var CategoriaController */
+        $categoriaController = ClassFactory::makeController( 'Categoria' );
+        $categorias = (array) $categoriaController->obterComRestricoes();
 
+        /** @var NoticiaView */
+        $noticiaView = $this->getView();
+        $noticiaView->exibirFormularioCadastro( $categorias );
+    }
+
+    // POST => /noticia/cadastrar ou /noticia/cadastrar/[0-9]
+    public function salvarNoticia(){
+        /** @var NoticiaView */
+        $noticiaView = $this->getView();
+
+        $erro = [];
+
+        try {
+            $dadosEnviados = $noticiaView->obterDadosEnviados();
+            $noticia = $this->converterEmObjeto( $this->getClasse(), $dadosEnviados );
+            $this->getService()->salvar( $noticia, $erro );
+
+            $noticiaView->sucessoAoSalvar();
+        } catch( ServiceException $e ){
+            $noticiaView->erroAoSalvar( $noticia, $erro );
+        }
     }
 }

@@ -15,7 +15,7 @@ class CategoriaController extends Controller {
         parent::__construct();
     }
 
-    // GET => categoria
+    // GET => /categoria
     public function listar(){
         $categorias = $this->getService()->obterComRestricoes();
 

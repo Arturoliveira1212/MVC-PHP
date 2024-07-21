@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+
+<h1>Adicionar Notícia</h1>
+
+{% set idNoticia = 0 %}
+{% set action = '/noticia/cadastrar' %}
+{% if noticia.id != null %}
+    {% set idNoticia = noticia.id %}
+    {% set action = '/noticia/cadastrar/' ~ idNoticia %}
+{% endif %}
+
+<form id="form-noticia" method="POST" action="{{action}}">
+    <input type="hidden" name="id" id="id" value="{{idNoticia}}">
+
+    <p>{{erro.titulo}}</p>
+    <label for="titulo">Título</label>
+    <input type="text" name="titulo" id="titulo" value="{{noticia.getTitulo()}}">
+
+    <p>{{erro.categoria}}</p>
+    <label for="idCategoria">Categoria</label>
+    <select name="idCategoria" id="idCategoria">
+        {% for categoria in categorias %}
+            <option value="{{ categoria.getId() }}"> {{ categoria.getNome() }}</option>
+        {% endfor %}
+    </select>
+
+    <p>{{erro.conteudo}}</p>
+    <label for="conteudo">Título</label>
+    <textarea type="text" name="conteudo" id="conteudo" value="{{noticia.getConteudo()}}"></textarea>
+
+    <input type="submit" value="Adicionar">
+</form>
+
+{% endblock %}

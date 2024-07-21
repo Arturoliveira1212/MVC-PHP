@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block conteudo %}
+
+<h1>Notícias</h1>
+
+{% if noticias is not empty %}
+	<table border="3">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Título</th>
+				<th>Categoria</th>
+				<th>Conteudo</th>
+				<th>Data Cadastro</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for noticia in noticias %}
+				<tr>
+					<td> {{ noticia.getId() }} </td>
+					<td> {{ noticia.getTitulo() }} </td>
+					<td> {{ noticia.getCategoria().getNome() }} </td>
+					<td> {{ noticia.getConteudo() }} </td>
+					<td> {{ noticia.getDataCadastro() }} </td>
+					<td> <a href="/noticia/cadastrar/{{noticia.id}}" class="editar-noticia"> Editar </a> </td>
+					<td> <a href="" class="excluir-noticia" data-id-noticia="{{noticia.id}}"> Excluir </a> </td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% else %}
+	<p>Nenhuma notícia cadastrada.</p>
+{% endif %}
+
+<div>
+	<a href="/noticia/cadastrar">Adicionar notícia</a>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="/assets/js/gerenciar-noticia.js"></script>
+
+{% endblock %}

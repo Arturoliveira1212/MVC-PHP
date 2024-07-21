@@ -11,6 +11,11 @@ class Noticia implements Model {
     private string $conteudo = '';
     private ?DateTime $dataCadastro = null;
 
+    const TAMANHO_MINIMO_TITULO = 1;
+    const TAMANHO_MAXIMO_TITULO = 100;
+    const TAMANHO_MINIMO_CONTEUDO = 10;
+    const TAMANHO_MAXIMO_CONTEUDO = 1000;
+
     public function getId(){
         return $this->id;
     }

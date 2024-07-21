@@ -3,7 +3,6 @@
 namespace app\dao;
 
 use app\traits\ConversorDados;
-use app\traits\ConversorDadosCategoria;
 
 class CategoriaDAO extends DAOEmBDR {
 
@@ -18,21 +17,19 @@ class CategoriaDAO extends DAOEmBDR {
     }
 
     protected function adicionarNovo( $categoria ){
-        $nomeTabela = $this->nomeTabela();
-        $comando = "INSERT INTO {$nomeTabela} ( id, nome ) VALUES ( :id, :nome )";
+        $comando = "INSERT INTO {$this->nomeTabela()} ( id, nome ) VALUES ( :id, :nome )";
         $this->getBancoDados()->executar( $comando, $this->converterEmArray( $categoria ) );
     }
 
     protected function atualizar( $categoria ){
-        $nomeTabela = $this->nomeTabela();
-        $comando = "UPDATE {$nomeTabela} SET nome = :nome WHERE id = :id";
+        $comando = "UPDATE {$this->nomeTabela()} SET nome = :nome WHERE id = :id";
         $this->getBancoDados()->executar( $comando, $this->converterEmArray( $categoria ) );
     }
 
     protected function obterQuery( array $restricoes, array &$parametros ){
         $nomeTabela = $this->nomeTabela();
 
-        $select = "SELECT * FROM $nomeTabela";
+        $select = "SELECT * FROM {$nomeTabela}";
         $where = ' WHERE ativo = 1 ';
         $join = '';
 
@@ -46,7 +43,7 @@ class CategoriaDAO extends DAOEmBDR {
         return $comando;
     }
 
-    public function transformarEmObjeto(array $linhas){
+    public function transformarEmObjeto( array $linhas ){
         return $this->converterEmObjeto( 'Categoria', $linhas );
     }
 }

@@ -2,11 +2,11 @@
 
 namespace app\dao;
 
-use app\traits\ConversorDadosNoticia;
+use app\traits\ConversorDados;
 
 class NoticiaDAO extends DAOEmBDR {
 
-    use ConversorDadosNoticia;
+    use ConversorDados;
 
     public function __construct(){
         parent::__construct();
@@ -17,20 +17,19 @@ class NoticiaDAO extends DAOEmBDR {
     }
 
     protected function adicionarNovo( $noticia ){
-        $nomeTabela = $this->nomeTabela();
-        $comando = "INSERT INTO {$nomeTabela} ( id, titulo, idCategoria, conteudo, dataCadastro ) VALUES ( :id, :titulo, :idCategoria, :conteudo, :dataCadastro )";
-        $parametros = $this->transformarEmArray( $noticia );
-        $this->getBancoDados()->executar( $comando, $parametros );
+        $comando = "INSERT INTO {$this->nomeTabela()} ( id, titulo, idCategoria, conteudo, dataCadastro ) VALUES ( :id, :titulo, :idCategoria, :conteudo, :dataCadastro )";
+        $this->getBancoDados()->executar( $comando, $this->converterEmArray( $noticia ) );
     }
 
-    protected function atualizar( $objeto ){
-        $comando = '';
+    protected function atualizar( $noticia ){
+        $comando = "UPDATE {$this->nomeTabela()} SET nome = :nome WHERE id = :id";
+        $this->getBancoDados()->executar( $comando, $this->converterEmArray( $noticia ) );
     }
 
     protected function obterQuery( array $restricoes, array &$parametros ){
         $nomeTabela = $this->nomeTabela();
 
-        $select = "SELECT * FROM $nomeTabela";
+        $select = "SELECT * FROM {$nomeTabela}";
         $where = ' WHERE ativo = 1 ';
         $join = '';
 
@@ -42,5 +41,9 @@ class NoticiaDAO extends DAOEmBDR {
         $comando = $select . $join . $where;
 
         return $comando;
+    }
+
+    public function transformarEmObjeto( array $linhas ){
+        return $this->converterEmObjeto( 'Noticia', $linhas );
     }
 }

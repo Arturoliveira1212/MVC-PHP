@@ -38,7 +38,7 @@ abstract class DAOEmBDR implements DAO {
         $parametros = [];
         $comando = $this->obterQuery( [ 'id' => $id ], $parametros );
         $objetos = $this->obterObjetos( $comando, [ $this, 'transformarEmObjeto' ], $parametros );
-        return ! empty( $objetos ) ? array_shift($objetos) : null;
+        return ! empty( $objetos ) ? array_shift( $objetos ) : null;
     }
 
     public function obterComRestricoes( array $restricoes = [] ){

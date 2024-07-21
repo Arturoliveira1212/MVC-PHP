@@ -49,14 +49,14 @@ abstract class Controller {
     }
 
     public function desativarComId( int $id ){
-        $this->getService()->desativarComId( $id );
+        return $this->getService()->desativarComId( $id );
     }
 
     public function obterComId( int $id ){
-        $this->getService()->obterComId( $id );
+        return $this->getService()->obterComId( $id );
     }
 
     public function obterComRestricoes( array $restricoes = [] ){
-        $this->getService()->obterComRestricoes( $restricoes );
+        return $this->getService()->obterComRestricoes( $restricoes );
     }
 }

@@ -30,6 +30,8 @@ class Router {
         return [
             '/categoria/cadastrar'        => 'Categoria@salvarCategoria',
             '/categoria/cadastrar/[0-9]+' => 'Categoria@salvarCategoria',
+            '/noticia/cadastrar'          => 'Noticia@salvarNoticia',
+            '/noticia/cadastrar/[0-9]+'   => 'Noticia@salvarNoticia',
         ];
     }
 

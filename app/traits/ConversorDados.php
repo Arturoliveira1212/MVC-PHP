@@ -21,9 +21,9 @@ trait ConversorDados {
             $this->preencherAtributosSimplesNoObjeto( $classe, $atributosSimples, $dados );
         }
 
-        $atributosObjetos = $classe->obterAtributosObjetos();
-        if( ! empty( $atributosObjetos ) ){
-            $this->preencherAtributosObjetosNoObjeto( $classe, $atributosObjetos, $dados );
+        $atributosObjeto = $classe->obterAtributosObjetos();
+        if( ! empty( $atributosObjeto ) ){
+            $this->preencherAtributosObjetosNoObjeto( $classe, $atributosObjeto, $dados );
         }
 
         return $classe;
@@ -38,15 +38,15 @@ trait ConversorDados {
         }
     }
 
-    private function preencherAtributosObjetosNoObjeto( Model $classe, array $atributoObjetos, array $dados ){
-        foreach( $atributoObjetos as $atributoObjeto => $informarcoesAtributo ){
+    private function preencherAtributosObjetosNoObjeto( Model $classe, array $atributosObjeto, array $dados ){
+        foreach( $atributosObjeto as $atributoObjeto => $informarcoesAtributo ){
             $idCampo = $informarcoesAtributo['idCampo'];
             $nomeObjeto = $informarcoesAtributo['nomeObjeto'];
             $metodo = 'set' . ucfirst( $atributoObjeto );
             if( method_exists( $classe, $metodo ) && isset( $dados[ $idCampo ] ) ){
                 $controller = ClassFactory::makeController( $nomeObjeto );
-                $objeto = $controller->obterComId( $dados[ $idCampo ] );
-                if( $objeto instanceof $classe ){
+                $objeto = $controller->obterComId( intval( $dados[ $idCampo ] ) );
+                if( ! is_null( $objeto ) ){
                     $classe->$metodo( $objeto );
                 }
             }
